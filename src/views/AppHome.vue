@@ -1,30 +1,6 @@
 <template>
   <div>
     <appbar :noshow="true"></appbar>
-    <pull-to
-    style="padding:0px;margin:0px"
-    :is-touch-sensitive="isTouchSensitive"
-    :top-load-method="refresh"
-    :bottom-load-method="bottomLoad"
-    @top-state-change="stateChange"
-    :topConfig="{ pullText:'', triggerText:'', loadingText:'', doneText:'' }">
-      <template v-if="circleShow" slot="top-block">
-        <v-row align="center" justify="center">
-          <v-col align="center" justify="center">
-            <v-progress-circular
-                style="z-index:9999"
-                :indeterminate="true"
-                :rotate="4"
-                :size="28"
-                :value="0"
-                :width="4"
-                dark
-                >
-            </v-progress-circular>
-          </v-col>
-        </v-row>
-      </template>
-      <v-container style="padding:0px;margin:0px;">
         <v-row>
           
           <v-col cols="12" style="padding:0px 0px 0px 0px;" class="black">
@@ -33,48 +9,14 @@
             </v-col>
           </v-col>
 
-          <!-- 카테고리 -->
-          <!-- <v-col cols="12" style="padding:0px 0px 0px 0px;" class="black">
-            <artSwipeCategory :num="0.5">
-            </artSwipeCategory>
-          </v-col> -->
 
-          <!-- <v-col cols="12" class="black">
-            <v-sheet height="40px" class="black"></v-sheet>
-          </v-col> -->
-
-          <!-- 최신작품 -->
-          <v-col cols="12" style="padding:0px 0px 0px 0px;" class="black">
-            <artSwipeNew v-if="show" :num="2.6">
-            </artSwipeNew>
-          </v-col>
-
-          <v-col cols="12" class="black">
-            <v-sheet height="30px" class="black"></v-sheet>
-          </v-col>
-
-          <!-- 트렌디 타투 -->
-          <!-- <v-col cols="12" style="padding:0px 0px 0px 0px;" class="black">
-            <artSwipeNewArtist v-if="show" :num="2.6">
-            </artSwipeNewArtist>
-          </v-col> -->
-
-          <!-- <v-col cols="12" class="black">
-            <v-sheet height="10px" class="black"></v-sheet>
-          </v-col> -->
-
-          <!-- <v-col cols="12" style="padding:0px 0px 0px 0px;" class="black">
+          <v-col cols="12" style="" class="black">
             <artSwipeSearch :num="0.8">
             </artSwipeSearch>
-          </v-col> -->
-        
-          <div v-if="eventArtistShow">
-            <event-artist :eventImg="eventImg" :eventArtistShow="eventArtistShow"></event-artist>
-          </div>
+          </v-col>
 
         </v-row>
-      </v-container>
-    </pull-to>
+ 
   </div>
 </template>
 
@@ -87,6 +29,8 @@ import eventArtist from '../components/eventArtist'
 import { dbRead, dbQuery, appContents, dbUpdate} from '../firebase'
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import bus from '../utils/bus'
+import cardListSmall from '../components/cardListSmall'
+import artSwipeSearch from '../components/artSwipeSearch'
 
 
 export default {
@@ -96,7 +40,9 @@ export default {
     topItemsHome,
     artSwipeNew,
     eventArtist,
-    PullTo
+    PullTo,
+    cardListSmall,
+    artSwipeSearch,
   },
   computed: {
     ...mapGetters({

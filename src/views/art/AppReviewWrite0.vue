@@ -78,8 +78,8 @@ export default {
             // 자동으로 입력되어야 할 변수
             authorEmail: this.currentUser.email,
             authorUid: this.currentUser.uid,
-            artId: this.writeId,
-            artAuthorUid: this.artAuthorUid,
+            // artId: this.writeId,
+            storeUid: this.writeId,
 
             modifiedAt: null, //나중에 수정 페이지에서 저장될 예정,, 미리 만들어 둔 것
         }

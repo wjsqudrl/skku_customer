@@ -17,6 +17,9 @@
           <v-col v-if="isAuthor" cols="12" justify="center" align="center">
             <v-btn small outlined width="100%" :to="'/accountsettings/' + userProfile.data().uid">프로필 수정</v-btn>
           </v-col>
+          <v-col v-else cols="12" justify="center" align="center">
+            <artistFollowBtn></artistFollowBtn>
+          </v-col>
           <v-col v-if="authorProfile ? authorProfile.data().isArtist === true ? true : false : false" cols="12" justify="center" align="center">
             <consult-btn :artUid="$route.params.id" :userProfile="userProfile" :authorProfile="authorProfile"></consult-btn>
           </v-col>
@@ -44,12 +47,14 @@
         <v-row style="padding-top:20px;" v-if="authorProfile ? authorProfile.data().isArtist === true ? true : false : false">
           <review-tab :reviewsDocsToArray="reviewToMe"></review-tab>
         </v-row>
+        <v-row class="black" style="padding:30px 0px 30px 0px;" v-if="authorProfile ? authorProfile.data().isArtist === true ? true : false : false">
+          <v-btn width="100%" color="info" @click="showDialog=!showDialog" style="padding:0px;font-size:13px;">견적요청</v-btn>
+        </v-row>
       </v-col>
-      
-      
-      <v-row class="black" style="padding:10px 0px 10px 0px;">
+<!--       
+      <v-row class="black" style="padding:10px 0px 10px 0px;" v-if="authorProfile ? authorProfile.data().isArtist === true ? true : false : false">
         <v-btn width="100%" color="info" @click="showDialog=!showDialog" style="padding:0px;font-size:13px;">견적요청</v-btn>
-      </v-row>
+      </v-row> -->
 
       <v-bottom-sheet v-model="showDialog" max-width="calc(100% - 0px)" scrollable inset>
         <v-card style="border-top-left-radius:30px; border-top-right-radius:30px; background-color:black;">
@@ -231,6 +236,7 @@ export default {
       where:'',
       valid: false,
       imgVisible: false, // 수정으로들어왔을때, img-view 컴포넌트가 좀 나중에 떠야 props로 제대로 변수값을 넘겨주기 가능
+      noLocation: false,
     }
   },
   methods: {
@@ -261,7 +267,10 @@ export default {
         await navigator.geolocation.getCurrentPosition(pos => {
         this.latNow = pos.coords.latitude
         this.lngNow = pos.coords.longitude
-        }, err => {
+        // alert("send")
+        },
+        err => {
+          this.noLocation =true          
         })
     },
     async clickCode(result){
@@ -270,12 +279,44 @@ export default {
       }
       this.askAddr=a
       this.where=this.askAddr.name
+      await this.searchSubmit(this.askAddr.name)
+      console.log(this.LatLng)
       this.showDialog1 = false
       // this.$emit('address', a)
-  },
+    },
+    searchSubmit(addr) {
+      var geocoder = new kakao.maps.services.Geocoder();
+      geocoder.addressSearch(addr, (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+
+              // let bounds = new kakao.maps.LatLngBounds();
+
+              result.forEach(async (data)=>{
+                  // bounds.extend(new kakao.maps.LatLng(data.y, data.x));
+                  console.log(data.y, data.x)
+                  this.LatLng={lat:data.y, lng:data.x}
+                  // var markerPosition  = new kakao.maps.LatLng(data.y, data.x); 
+                  // var marker = new kakao.maps.Marker({
+                  //     position: markerPosition
+                  // });
+                  // marker.setMap(this.map);
+
+              })
+              // console.log(data.y, data.x)
+              // await dbUpdate('userProfiles', this.authorProfile.id, {latLng: {lat:data.y, lng:data.x} })
+              // this.map.setBounds(bounds);
+              
+          }
+      });
+    },
     event(){
-      // alert("sdsd")
+      navigator.geolocation.getCurrentPosition(pos => {
+      this.latNow = pos.coords.latitude
+      this.lngNow = pos.coords.longitude
       this.showDialog1 = !this.showDialog1
+      }, err => {
+          alert("해당 브라우저의 위치 접근 허용이 필요합니다.")    
+      })
     },
     async clickWriteModify(type){
       this.disabled = true
@@ -421,7 +462,10 @@ export default {
         address: this.where,
         // 자동으로 입력되어야 할 변수
         createdAt: new Date(),
-        check:false,
+        check:true,
+        state:"noCheck",
+        reserved:false,
+        consult:[],
         }
       return a 
       },
@@ -431,7 +475,7 @@ export default {
     await bus.$emit('start:spinner')
     await this.getFollowsDocsArray()
     this.fetchReviewToMe(this.$route.params.id)
-    this.getCurrentLocation()
+    
     // await this.setAuthorArts()
     // await bus.$emit('end:spinner')
     // this.fileName = this.authorProfile.data().fileName
@@ -439,6 +483,7 @@ export default {
   },
   async mounted(){
     await this.getAuthorProfile(this.authorDocType)
+    this.getCurrentLocation()
     if (this.authorProfile){
       if (this.authorProfile.data().isArtist){
         this.lat = this.authorProfile ? this.authorProfile.data().latLng ? this.authorProfile.data().latLng.lat : 37.554229748867 : 37.554229748867
@@ -451,7 +496,7 @@ export default {
             const script = document.createElement('script');
             /* global kakao */
             script.onload = () => kakao.maps.load(this.initMap);
-            script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=66e112bad6ed1c35267171235fc42344&libraries=services';
+            script.src = '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=e9daeb105d5f14b828789e6a2a50b1f4&libraries=services';
             document.head.appendChild(script);
         }
       }

@@ -3,13 +3,15 @@
 
             <v-system-bar lights-out></v-system-bar>
             
-            <v-carousel v-model="imgIdx" hide-delimiter-background :continuous="false" :height="imgList.length === 0 ? '10px' : '300px'">
+            <v-carousel v-model="imgIdx" hide-delimiter-background :continuous="false" :height="imgList.length === 0 ? '10px' : '200px'">
                 <v-carousel-item v-for="(item, i) in imgList" :key="i">
                     <v-row class="fill-height" align="center" justify="center" >
                         <v-col cols="12">
-                            <v-img class="grey darken-4" :src="item.url"><v-btn :disabled="disabled" v-if="type === 'write' || type === 'reviewwrite'" @click.prevent="deleteImg(i)" icon>
-                                <v-icon >delete_outline</v-icon>
-                            </v-btn></v-img>
+                            <v-img class="grey darken-4" :src="item.url" height="200px">
+                                <v-btn :disabled="disabled" v-if="type === 'write' || type === 'reviewwrite'" @click.prevent="deleteImg(i)" icon>
+                                    <v-icon >delete_outline</v-icon>
+                                </v-btn>
+                            </v-img>
                         </v-col>
                     </v-row>
                 </v-carousel-item>
@@ -79,7 +81,7 @@ export default {
         img() {
             console.log('imgList is changed!')
             this.$emit('fileUpdate', this.img)
-            // console.log(this.imgList)
+            console.log(this.imgList)
         }
     },
     methods: {

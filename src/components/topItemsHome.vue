@@ -1,12 +1,12 @@
 <template>
 <v-col style="padding:0px;">
-    <swiper :options="swiperOptionTop" style="width:100%;">
-    <swiper-slide v-for="item in topItems" :class="item.class" :key="item.name">
-        <v-card :height="winHeight / 11 * 3" class="black" style="padding:0px; width:100%;"> 
-            <top-items-home-img :item="item"></top-items-home-img>
-        </v-card>
-    </swiper-slide>
-    <div class="swiper-pagination swiper-pagination-white" slot="pagination"></div> 
+    <swiper :options="swiperOptionTop" style="">
+        <swiper-slide v-for="item in topItems" :class="item.class" :key="item.name" style="margin:0px">
+            <v-card :height="winHeight / 11 * 3" class="black" style="width:100%;"> 
+                <top-items-home-img :item="item"></top-items-home-img>
+            </v-card>
+        </swiper-slide>
+        <div class="swiper-pagination swiper-pagination-white" slot="pagination"></div> 
     </swiper>
 
 </v-col>

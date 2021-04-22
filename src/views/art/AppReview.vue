@@ -23,33 +23,6 @@
     </v-col>
     <!-- 상세 정보 끝 -->
 
-    <!-- 댓글 시작 -->
-    <v-col cols="12"> 
-      <comment :type="type"></comment> 
-    </v-col>
-    <!-- 댓글 끝 -->
-
-    <!-- 상세 정보 시작 -->
-    <v-col cols="12">
-      <v-card flat>
-        <v-card-title>
-            원글
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text>
-          <v-card flat @click="$router.push('/art/' + authorDoc.data().artId)">
-            <v-img class="grey darken-4" :src="imgSrc"></v-img>
-
-            <v-card-title>
-              {{ rootArts ? rootArts.data().title : '' }}
-            </v-card-title>
-          </v-card>
-          
-          
-        </v-card-text>
-      </v-card>
-    </v-col>
-    <!-- 상세 정보 끝 -->
 
   </v-row>
   </div>
@@ -80,7 +53,7 @@ export default {
       type: 'review',
       forUser: false,
       authorDocType: 'review',
-      rootArts: '',
+      // rootArts: '',
       
     }
   },
@@ -91,17 +64,9 @@ export default {
       userProfile: 'getUserProfile', // commons.js
 
     }),
-    imgSrc(){
-      return this.rootArts ? this.rootArts.data().img[0].url : ''
-    }
   },
   watch:{
-    async authorDoc(){
-      if(this.authorDoc){
-        let a = await dbRead('arts', this.authorDoc.data().artId)
-        this.rootArts = a
-      }
-    }
+ 
   },
   async created(){
     await bus.$emit('start:spinner')

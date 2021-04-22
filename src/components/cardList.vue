@@ -3,6 +3,7 @@
         <v-col @click.stop="$router.push('/artist/' + item.uid)"  style="padding:0px 1px 0px 1px;" class="card" v-for="(item, i) in arts" :key="item.writeId" cols="6">
             <v-card tile class="black" style="line-height: 1rem;">
                 <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
                 <card-list-img :item="item" :size="size"></card-list-img>
                 <v-card-title style="padding:7px 3px 0px 3px; overflow:hidden; font-size:14px; text-overflow:ellipsis; white-space:nowrap; font-weight:600;">
                     {{ item.displayName }}

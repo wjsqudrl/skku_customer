@@ -20,7 +20,7 @@
               >
             </v-text-field>
           </template>
-          <template v-slot:filter-button>
+          <!-- <template v-slot:filter-button>
             <v-btn :style="searchStyle" icon>
               <v-icon v-if="!showFilter" @click.stop="showFilter=!showFilter" style="font-size:26px; color:#424242;">
               mdi-filter-outline
@@ -35,51 +35,8 @@
 
           </template>
           <template v-slot:filter>
-          </template>
+          </template> -->
         </search-header>
-
-        <pull-to
-        :is-touch-sensitive="isTouchSensitive"
-        :top-load-method="refresh"
-        :bottom-load-method="bottomLoad"
-        @top-state-change="stateChange"
-        :topConfig="{ pullText:'', triggerText:'', loadingText:'', doneText:'' }"
-        :bottom-config="{ pullText:'', triggerText:'', loadingText:'', doneText:'' }"
-        :is-bottom-keep-scroll="true"
-        >
-          <template v-if="circleShow" slot="top-block">
-            <v-row align="center" justify="center">
-              <v-col align="center" justify="center">
-                <v-progress-circular
-                    style="z-index:9999"
-                    :indeterminate="true"
-                    :rotate="4"
-                    :size="28"
-                    :value="0"
-                    :width="4"
-                    dark
-                    >
-                </v-progress-circular>
-              </v-col>
-            </v-row>
-          </template>
-          <template v-if="circleShow" slot="bottom-block">
-            <v-row align="center" justify="center">
-              <v-col align="center" justify="center">
-                <v-progress-circular
-                    style="z-index:9999"
-                    :indeterminate="true"
-                    :rotate="4"
-                    :size="28"
-                    :value="0"
-                    :width="4"
-                    dark
-                    >
-                </v-progress-circular>
-              </v-col>
-            </v-row>
-          </template>
-          <v-container>
 
             <v-data-iterator
               :sort-by="sortBy.toLowerCase()"
@@ -105,10 +62,7 @@
 
               <!-- 디폴트 내용부분 시작 -->
               <template v-slot:default="props">
-                <v-row>
-                  <!-- <v-col v-if="!isIos" cols="12"></v-col> -->
-                  <!-- <v-col v-if="!isIos" cols="12"></v-col> -->
-
+                <!-- <v-row>
                   <v-col cols="6" align="left">
                     <sort-dialog @sortByChange="sortByChange"></sort-dialog>
                   </v-col>
@@ -120,11 +74,12 @@
                       </v-icon>
                     </v-btn>
                   </v-col>
-
-                </v-row>
+                </v-row> -->
+                <v-col cols="12" height="20px"></v-col>
+              
                 <!-- 카드시작 -->
-                  <card-list v-if="gridSix" :arts="props.items" :size="size"></card-list>
-                  <card-list-small v-else :arts="props.items" :size="size"></card-list-small>
+                  <card-list :arts="props.items" :size="size"></card-list>
+                  <!-- <card-list-small v-else :arts="props.items" :size="size"></card-list-small> -->
                 <!-- 카드 끝 -->
               </template>
               <!-- 디폴트 내용 끝 -->
@@ -147,49 +102,8 @@
 
             </v-data-iterator>
 
-            </v-container>
-        </pull-to>
-
         <!-- 필터 부분 시작 -->
-        <v-bottom-sheet v-model="showFilter" max-width="calc(100% - 0px)" scrollable inset>
-          <template v-slot:activator="{ on }">
-          
-          </template>
-
-          <v-card style="background-color:#1a1c1f">
-            <v-card-title>
-                검색 필터
-                <v-spacer></v-spacer>
-                <v-btn outlined v-if="filterCloseBtn" @click="showFilter=!showFilter">
-                  닫기
-                </v-btn>
-            </v-card-title>
-            <v-divider></v-divider>
-            <v-card-text>
-              <search-filter
-                :filter="filter"
-                >
-              </search-filter>
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-row>
-              <v-col cols="4">
-              <v-btn outlined block @click="clearClickedList" v-if="!filterCloseBtn" >
-                <v-icon>refresh</v-icon>초기화
-              </v-btn>
-              </v-col>
-              <v-col cols="8">
-              <v-btn outlined block @click="showFilter=!showFilter" v-if="!filterCloseBtn" >
-                검색된 타투 보기
-              </v-btn>
-              </v-col >
-              </v-row>
-            </v-card-actions>
-          </v-card>
-
-        <!-- 필터 부분 끝 -->
-        </v-bottom-sheet>
+        
 
           
   </div>

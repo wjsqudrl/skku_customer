@@ -39,15 +39,14 @@
                         </v-col>
                     </v-row>
                     </v-card>
-                    <br>
-                    <br>
-                    <v-card class="grey darken-3">
+                    
+                    <!-- <v-card class="grey darken-3">
                         <v-row >
                             <v-col align="center" cols="12">  
                                 <v-btn v-on="on" tile block text>나의 사진 보관함</v-btn>
                             </v-col>
                         </v-row>
-                    </v-card>
+                    </v-card> -->
                     <br>
 
                 </template>
@@ -96,7 +95,7 @@
                                                         <v-row>
                                                             <v-col cols="12" justify="center" align="center">
                                                                 인스타그램 계정에 저장된 사진을 가져오시려면 <br>
-                                                                https://tattooup.co.kr/artist 에 로그인하신 후<br>
+                                                                에 로그인하신 후<br>
                                                                 "인스타그램 사진 연동" 메뉴에서 사진을 다운해주세요. <br>
                                                                 연동이 끝나면 앱을 다시 켜주세요.
                                                             </v-col>

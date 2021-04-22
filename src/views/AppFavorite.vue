@@ -1,42 +1,7 @@
 <template>
     <div>
     <appbar>이용내역</appbar>
-      <pull-to
-        :is-touch-sensitive="isTouchSensitive"
-        :top-load-method="refresh"
-        :bottom-load-method="bottomLoad"
-        @top-state-change="stateChange"
-        :topConfig="{ pullText:'', triggerText:'', loadingText:'', doneText:'' }"
-        :bottom-config="{ pullText:'', triggerText:'', loadingText:'', doneText:'' }" 
-        :is-bottom-keep-scroll="true"
-        >  
-        <template v-if="circleShow" slot="top-block">
-          <v-row align="center" justify="center">
-            <v-col align="center" justify="center">
-              <v-progress-circular
-                style="z-index:9999"
-                :indeterminate="true"
-                :rotate="4"
-                :size="28"
-                :value="0"
-                :width="4"
-                dark
-                >
-              </v-progress-circular>
-            </v-col>
-          </v-row>
-        </template>
-        <v-container>
 
-          <!-- <v-row class="black">
-            <v-col style="margin-bottom:0px;margin-top:0px;padding-top:0px;padding-bottom:0px" cols="12" align="right">
-              <v-btn icon @click="changeGridNum">
-                <v-icon>
-                    {{ gridSix ? 'list' : 'border_all' }}
-                </v-icon>
-              </v-btn>
-            </v-col>
-          </v-row> -->
 
           <!-- 카드시작 -->
           <div v-if="favoritesDocsToArray.length === 0">
@@ -54,8 +19,6 @@
           </div>
           <!-- 카드 끝 -->
 
-        </v-container>
-      </pull-to>
     </div>
 
 </template>

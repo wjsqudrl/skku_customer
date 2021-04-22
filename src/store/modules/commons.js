@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import { arts, appContents, dbRead, dbQuery } from '../../firebase.js';
+import { arts, userProfiles, appContents, dbRead, dbQuery } from '../../firebase.js';
 import { store } from '../store'
 import bus from '../../utils/bus'
 const state = {
@@ -221,36 +221,19 @@ const actions = {
     async fetchArts(context) { // 여기서 출력해주는 artList는 artList의 item들을 담은 array임
         // alert('start')
         context.commit('changeNavBtnDisabled')
-        let querySnapshot = await dbQuery("userProfiles","isArtist","==",true)
-        const items = []
-        console.log(querySnapshot[0].data())
-        querySnapshot.forEach(doc => { 
-            items.push(doc)
-        })
-        items.sort((t1,t2) => t1.data().createdAt > t2.data().createdAt ? -1 : 1)
-        context.commit('setArts', items)
-        // alert('middle')
-        // var a = []
-        // items.forEach( async art => {
-        //     a.push({ ...art.data(), id:art.id})
-        // })
-        // context.commit('setArtsItems', a)
-        context.commit('changeNavBtnDisabled')
-        // alert('end')
+        // let querySnapshot = await dbQuery("userProfiles","isArtist","==",true)
+        userProfiles.where("isArtist", "==", true).onSnapshot(function (querySnapshot) {
+            let items = []
+            // console.log(querySnapshot[0].data())
+            querySnapshot.forEach(doc => {
+                items.push(doc)
+            });
+            items.sort((t1, t2) => t1.data().createdAt > t2.data().createdAt ? -1 : 1)
+            context.commit('setArts', items)
+        });
 
-        // let querySnapshot = await arts.get()
-        // const items = []
-        // querySnapshot.forEach(doc => { items.push(doc) })
-        // items.sort((t1,t2) => t1.data().createdAt > t2.data().createdAt ? -1 : 1)
-        // context.commit('setArts', items)
-        // // alert('middle')
-        // var a = []
-        // items.forEach( async art => {
-        //     a.push({ ...art.data(), id:art.id})
-        // })
-        // context.commit('setArtsItems', a)
-        // context.commit('changeNavBtnDisabled')
-        // alert('end')
+        context.commit('changeNavBtnDisabled')
+        
     },
     async fetchImg(context){
 

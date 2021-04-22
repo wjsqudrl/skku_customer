@@ -280,6 +280,7 @@ export const router = new VueRouter({
         {
             path: '/artist/:id',
             component: AppArtist,
+            name:"artist",
             beforeEnter: loginEmailInfoCheck
         },
         {
